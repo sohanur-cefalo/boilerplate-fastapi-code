@@ -112,6 +112,28 @@ def main():
             )
             config_file.write_text(content)
         
+        # Update alembic env.py to import all models for auto-detection
+        print("🔧 Updating Alembic configuration for auto-detection...")
+        alembic_env_file = project_dir / "alembic" / "env.py"
+        if alembic_env_file.exists():
+            content = alembic_env_file.read_text()
+            
+            # Check if models are already imported
+            if "from app.models import" not in content:
+                # Find the line with Base import and add model imports after it
+                lines = content.split('\n')
+                new_lines = []
+                for line in lines:
+                    new_lines.append(line)
+                    if "from app.db.session import Base" in line:
+                        new_lines.append("")
+                        new_lines.append("# Import all models to make them discoverable for Alembic")
+                        new_lines.append("from app.models import *  # This will import all models automatically")
+                        new_lines.append("")
+                
+                # Write the updated content
+                alembic_env_file.write_text('\n'.join(new_lines))
+        
         # Ask user about user table
         print("👤 Do you want to include a User table?")
         print("1. Yes, include User table (default)")
@@ -168,6 +190,28 @@ def main():
             api_router_file = project_dir / "app" / "api" / "v1" / "api.py"
             if api_router_file.exists():
                 api_router_file.write_text("from fastapi import APIRouter\n\n# Import your routers here\n# from app.api.v1.endpoints import your_router\n\napi_router = APIRouter()\n\n# Add your routers here\n# api_router.include_router(your_router.router, prefix=\"/your-endpoint\", tags=[\"your-tag\"])\n")
+        
+        # Update alembic env.py to import all models for auto-detection
+        print("🔧 Updating Alembic configuration for auto-detection...")
+        alembic_env_file = project_dir / "alembic" / "env.py"
+        if alembic_env_file.exists():
+            content = alembic_env_file.read_text()
+            
+            # Check if models are already imported
+            if "from app.models import" not in content:
+                # Find the line with Base import and add model imports after it
+                lines = content.split('\n')
+                new_lines = []
+                for line in lines:
+                    new_lines.append(line)
+                    if "from app.db.session import Base" in line:
+                        new_lines.append("")
+                        new_lines.append("# Import all models to make them discoverable for Alembic")
+                        new_lines.append("from app.models import *  # This will import all models automatically")
+                        new_lines.append("")
+                
+                # Write the updated content
+                alembic_env_file.write_text('\n'.join(new_lines))
         
         # Ask user for development method
         print("📋 Choose your development method:")
