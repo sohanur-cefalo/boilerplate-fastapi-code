@@ -78,6 +78,10 @@ def run_bpython_shell():
 
     try:
         import bpython
+        # Set a simple prompt to avoid PS1 object issues
+        import sys
+        sys.ps1 = ">>> "
+        sys.ps2 = "... "
         bpython.embed(locals_=shell_namespace)
     except ImportError:
         print("❌ bpython not installed. Installing...")
@@ -85,6 +89,11 @@ def run_bpython_shell():
         subprocess.run([sys.executable, "-m", "pip", "install", "bpython"])
         print("✅ bpython installed. Please run the script again.")
         return
+    except Exception as e:
+        print(f"❌ bpython error: {e}")
+        print("🔄 Falling back to standard Python shell...")
+        import code
+        code.interact(local=shell_namespace)
 
 if __name__ == "__main__":
     run_bpython_shell()

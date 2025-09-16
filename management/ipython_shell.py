@@ -85,6 +85,11 @@ def run_ipython_shell():
         subprocess.run([sys.executable, "-m", "pip", "install", "ipython"])
         print("✅ IPython installed. Please run the script again.")
         return
+    except Exception as e:
+        print(f"❌ IPython error: {e}")
+        print("🔄 Falling back to standard Python shell...")
+        import code
+        code.interact(local=shell_namespace)
 
 if __name__ == "__main__":
     run_ipython_shell()
