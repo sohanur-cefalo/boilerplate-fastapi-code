@@ -35,12 +35,15 @@ def main():
         
         # Get project name with default
         default_name = "my-fastapi-project"
-        project_name = input(f"📝 Project name [{default_name}]: ").strip()
+        user_input = input(f"📝 Project name [{default_name}]: ").strip()
         
         # Use default if empty
-        if not project_name:
+        if not user_input:
             project_name = default_name
             print(f"✅ Using default name: {project_name}")
+        else:
+            project_name = user_input
+            print(f"✅ Using name: {project_name}")
         
         # Validate project name
         if not project_name.replace('-', '').replace('_', '').isalnum():
