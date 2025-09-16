@@ -22,21 +22,68 @@ pip install -r requirements.txt
 # 4. Start only the database
 docker-compose up db -d
 
-# 5. Copy environment file
+# 5. Wait for database to be ready (check status)
+docker-compose ps
+# Wait until you see "healthy" status, then proceed
+
+# 6. Copy environment file
 cp env.example .env
 
-# 6. Create initial migration (detects existing models)
+# 7. Create initial migration (detects existing models)
 alembic revision --autogenerate -m 'Initial migration'
 
-# 7. Apply migration to database
+# 8. Apply migration to database
 alembic upgrade head
 
-# 8. Start the application
+# 9. Start the application
 uvicorn app.main:app --reload
 
 # Visit http://localhost:8000/docs for API documentation
 # Database runs on port 54321 (no conflicts!)
 ```
+
+## 🔧 Troubleshooting
+
+### Database Connection Issues
+If you get connection errors like `server closed the connection unexpectedly`:
+
+1. **Check database status:**
+   ```bash
+   docker-compose ps
+   # Should show "healthy" status
+   ```
+
+2. **Wait for database to be ready:**
+   ```bash
+   # Database needs time to fully initialize
+   # Wait 10-30 seconds after docker-compose up db -d
+   ```
+
+3. **Check database logs:**
+   ```bash
+   docker-compose logs db
+   # Look for "database system is ready to accept connections"
+   ```
+
+4. **Restart database if needed:**
+   ```bash
+   docker-compose down
+   docker-compose up db -d
+   ```
+
+### Migration Issues
+If migrations fail:
+
+1. **Ensure alembic/versions directory exists:**
+   ```bash
+   mkdir -p alembic/versions
+   ```
+
+2. **Check if models are imported in alembic/env.py:**
+   ```python
+   # Should have this line:
+   from app.models import *  # This will import all models automatically
+   ```
 
 ## 🐚 Interactive Shell
 

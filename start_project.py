@@ -134,6 +134,55 @@ def main():
                 # Write the updated content
                 alembic_env_file.write_text('\n'.join(new_lines))
         
+        # Create database readiness check script
+        print("📝 Creating database readiness check script...")
+        db_check_script = project_dir / "check_db.py"
+        db_check_content = '''#!/usr/bin/env python3
+"""
+Database Readiness Check Script
+Run this to verify your database connection is working.
+"""
+import sys
+import time
+from sqlalchemy import create_engine, text
+from app.core.config import settings
+
+def check_database_connection():
+    """Check if database is ready and accessible"""
+    print("🔍 Checking database connection...")
+    print(f"Database URL: {settings.database_url}")
+    
+    max_retries = 10
+    retry_delay = 3
+    
+    for attempt in range(max_retries):
+        try:
+            engine = create_engine(settings.database_url)
+            with engine.connect() as conn:
+                result = conn.execute(text("SELECT 1"))
+                print("✅ Database connection successful!")
+                return True
+        except Exception as e:
+            print(f"❌ Attempt {attempt + 1}/{max_retries} failed: {e}")
+            if attempt < max_retries - 1:
+                print(f"⏳ Waiting {retry_delay} seconds before retry...")
+                time.sleep(retry_delay)
+            else:
+                print("❌ All connection attempts failed!")
+                print("💡 Make sure your database is running:")
+                print("   docker-compose ps")
+                print("   docker-compose logs db")
+                return False
+    
+    return False
+
+if __name__ == "__main__":
+    success = check_database_connection()
+    sys.exit(0 if success else 1)
+'''
+        db_check_script.write_text(db_check_content)
+        db_check_script.chmod(0o755)
+        
         # Ask user about user table
         print("👤 Do you want to include a User table?")
         print("1. Yes, include User table (default)")
@@ -336,12 +385,16 @@ def main():
             print("   - macOS/Linux: source env/bin/activate")
             print("4. pip install -r requirements.txt")
             print("5. docker-compose up db -d")
-            print("6. cp env.example .env")
-            print("7. alembic revision --autogenerate -m 'Initial migration'")
-            print("8. alembic upgrade head")
-            print("9. uvicorn app.main:app --reload")
+            print("6. Wait for database to be ready (check with: docker-compose ps)")
+            print("7. cp env.example .env")
+            print("8. python check_db.py  # Verify database connection")
+            print("9. alembic revision --autogenerate -m 'Initial migration'")
+            print("10. alembic upgrade head")
+            print("11. uvicorn app.main:app --reload")
             print("\n🌐 Visit http://localhost:8000/docs for API documentation")
             print("📊 Database runs on port 54321 (no conflicts!)")
+            print("\n💡 If you get connection errors, run: python check_db.py")
+            print("💡 Database needs time to fully initialize after docker-compose up.")
         
         print()
         print("📚 Read the project README.md for complete instructions")
