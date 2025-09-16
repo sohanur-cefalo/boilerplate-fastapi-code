@@ -79,6 +79,51 @@ git clone https://github.com/sohanur-cefalo/boilerplate-fastapi-code.git temp-bo
 
 Visit http://localhost:8000/docs for API documentation!
 
+## 🛠️ Alternative Development Workflow
+
+If you prefer to work with the boilerplate directly and manage your own environment:
+
+### Method: Clone + Virtual Environment + Docker DB
+
+```bash
+# 1. Clone the boilerplate directly
+git clone https://github.com/sohanur-cefalo/boilerplate-fastapi-code.git my-project
+cd my-project
+
+# 2. Create virtual environment
+python -m venv env
+
+# 3. Activate virtual environment
+# On Windows:
+env\Scripts\activate
+# On macOS/Linux:
+source env/bin/activate
+
+# 4. Install dependencies
+pip install -r requirements.txt
+
+# 5. Start only the database with Docker
+docker-compose up db -d
+
+# 6. Copy environment file
+cp env.example .env
+
+# 7. Run migrations
+alembic revision --autogenerate -m "Initial migration"
+alembic upgrade head
+
+# 8. Start the application
+uvicorn app.main:app --reload
+```
+> 📋 **Copy these commands** - Click the code block above and press `Ctrl+C` (or `Cmd+C` on Mac)
+
+**Benefits of this approach:**
+- ✅ **Full control**: Work directly with the boilerplate code
+- ✅ **Local development**: FastAPI runs locally with hot reload
+- ✅ **Database isolation**: PostgreSQL runs in Docker (port 54321)
+- ✅ **No port conflicts**: Database uses 54321, app uses 8000
+- ✅ **Easy debugging**: Direct access to Python environment
+
 ## 🎯 How to Use This Repository
 
 This boilerplate provides **two ways** to start your FastAPI project:
