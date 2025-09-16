@@ -97,6 +97,10 @@ def main():
             '__pycache__', '*.pyc', '.git', '.DS_Store', 'alembic/versions/*.py', 'templates'
         ))
         
+        # Ensure alembic/versions directory exists
+        versions_dir = project_dir / "alembic" / "versions"
+        versions_dir.mkdir(parents=True, exist_ok=True)
+        
         # Update project name in config
         print("⚙️  Updating project configuration...")
         config_file = project_dir / "app" / "core" / "config.py"

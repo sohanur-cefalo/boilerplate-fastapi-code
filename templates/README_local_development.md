@@ -11,23 +11,34 @@ A FastAPI project with SQLAlchemy 2.0, PostgreSQL, and Alembic migrations.
 # 2. Create database
 createdb {project_name.lower()}
 
-# 3. Copy environment file
+# 3. Create virtual environment
+python -m venv env
+
+# 4. Activate virtual environment
+# Windows:
+env\Scripts\activate
+# macOS/Linux:
+source env/bin/activate
+
+# 5. Copy environment file
 cp env.example .env
 
-# 4. Edit .env with your database settings
+# 6. Edit .env with your database settings
 # DATABASE_URL=postgresql://username:password@localhost:5432/{project_name.lower()}
 # DEBUG=True
 # PROJECT_NAME={project_title}
 # VERSION=1.0.0
 
-# 5. Install dependencies
+# 7. Install dependencies
 pip install -r requirements.txt
 
-# 6. Run migrations
+# 8. Create initial migration (detects existing models)
 alembic revision --autogenerate -m "Initial migration"
+
+# 9. Apply migration to database
 alembic upgrade head
 
-# 7. Start the application
+# 10. Start the application
 uvicorn app.main:app --reload
 
 # Visit http://localhost:8000/docs for API documentation
@@ -311,6 +322,7 @@ VERSION=1.0.0
 - Check if all models are imported in `alembic/env.py`
 - Verify database connection
 - Check migration files for syntax errors
+- If `alembic/versions` directory doesn't exist, create it: `mkdir -p alembic/versions`
 - Ensure database user has proper permissions
 
 ### Port Conflicts
