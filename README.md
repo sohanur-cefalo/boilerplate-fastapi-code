@@ -5,7 +5,7 @@ A production-ready FastAPI boilerplate with modern SQLAlchemy 2.0, PostgreSQL, a
 ## 🚀 Quick Start (Interactive)
 
 ```bash
-git clone https://github.com/sohanur-cefalo/boilerplate-fastapi-code.git temp-boilerplate && cd temp-boilerplate && python start_project.py && cd .. && rm -rf temp-boilerplate
+git clone https://github.com/sohanur-cefalo/boilerplate-fastapi-code.git temp-boilerplate && cd temp-boilerplate && python start_project.py && cd .. && rm -rf temp-boilerplate || (cd .. && rm -rf temp-boilerplate && exit 1)
 ```
 > 📋 **Copy this command** - Click the code block above and press `Ctrl+C` (or `Cmd+C` on Mac)
 
@@ -19,7 +19,7 @@ git clone https://github.com/sohanur-cefalo/boilerplate-fastapi-code.git temp-bo
 
 **With specific project name:**
 ```bash
-git clone https://github.com/sohanur-cefalo/boilerplate-fastapi-code.git temp-boilerplate && cd temp-boilerplate && python start_project.py my-awesome-api && cd .. && rm -rf temp-boilerplate
+git clone https://github.com/sohanur-cefalo/boilerplate-fastapi-code.git temp-boilerplate && cd temp-boilerplate && python start_project.py my-awesome-api && cd .. && rm -rf temp-boilerplate || (cd .. && rm -rf temp-boilerplate && exit 1)
 ```
 > 📋 **Copy this command** - Click the code block above and press `Ctrl+C` (or `Cmd+C` on Mac)
 
@@ -58,7 +58,7 @@ The fastest way to get started is with Docker:
 
 ```bash
 # Interactive project creation
-git clone https://github.com/sohanur-cefalo/boilerplate-fastapi-code.git temp-boilerplate && cd temp-boilerplate && python start_project.py && cd .. && rm -rf temp-boilerplate
+git clone https://github.com/sohanur-cefalo/boilerplate-fastapi-code.git temp-boilerplate && cd temp-boilerplate && python start_project.py && cd .. && rm -rf temp-boilerplate || (cd .. && rm -rf temp-boilerplate && exit 1)
 ```
 > 📋 **Copy this command** - Click the code block above and press `Ctrl+C` (or `Cmd+C` on Mac)
 
@@ -167,7 +167,7 @@ git commit -m "Initial commit"
 ### Method 3: Docker (Quickest)
 ```bash
 # Interactive project creation
-git clone https://github.com/sohanur-cefalo/boilerplate-fastapi-code.git temp-boilerplate && cd temp-boilerplate && python start_project.py && cd .. && rm -rf temp-boilerplate
+git clone https://github.com/sohanur-cefalo/boilerplate-fastapi-code.git temp-boilerplate && cd temp-boilerplate && python start_project.py && cd .. && rm -rf temp-boilerplate || (cd .. && rm -rf temp-boilerplate && exit 1)
 ```
 > 📋 **Copy these commands** - Click the code block above and press `Ctrl+C` (or `Cmd+C` on Mac)
 
@@ -983,12 +983,12 @@ This project is licensed under the MIT License.
 ## 🎉 Ready to Start?
 
 ### For User-Based Applications:
-1. Run interactive generator: `git clone https://github.com/sohanur-cefalo/boilerplate-fastapi-code.git temp-boilerplate && cd temp-boilerplate && python start_project.py && cd .. && rm -rf temp-boilerplate`
+1. Run interactive generator: `git clone https://github.com/sohanur-cefalo/boilerplate-fastapi-code.git temp-boilerplate && cd temp-boilerplate && python start_project.py && cd .. && rm -rf temp-boilerplate || (cd .. && rm -rf temp-boilerplate && exit 1)`
 2. Follow the interactive prompts
 3. Start building your user management features!
 
 ### For Custom Applications:
-1. Run interactive generator: `git clone https://github.com/sohanur-cefalo/boilerplate-fastapi-code.git temp-boilerplate && cd temp-boilerplate && python start_project.py && cd .. && rm -rf temp-boilerplate`
+1. Run interactive generator: `git clone https://github.com/sohanur-cefalo/boilerplate-fastapi-code.git temp-boilerplate && cd temp-boilerplate && python start_project.py && cd .. && rm -rf temp-boilerplate || (cd .. && rm -rf temp-boilerplate && exit 1)`
 2. Follow the interactive prompts
 3. Start building your custom models!
 

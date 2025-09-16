@@ -41,14 +41,8 @@ def main():
             # Try to read input with proper handling
             user_input = input(f"📝 Project name [{default_name}]: ")
             
-            # Debug: show what we received
-            print(f"DEBUG: Raw input: {repr(user_input)}")
-            
             # Clean input - remove all non-alphanumeric characters except hyphens and underscores
             user_input = re.sub(r'[^\w\-_]', '', user_input)
-            
-            # Debug: show what we have after cleaning
-            print(f"DEBUG: Cleaned input: {repr(user_input)}")
             
             # Use default if empty after cleaning
             if not user_input:
@@ -484,7 +478,9 @@ docker-compose up -d
     except Exception as e:
         print(f"❌ Error creating project: {e}")
         if project_dir.exists():
+            print(f"🧹 Cleaning up project directory: {project_dir}")
             shutil.rmtree(project_dir)
+        print("💡 The temp-boilerplate directory will be cleaned up automatically")
         sys.exit(1)
 
 if __name__ == "__main__":
