@@ -242,6 +242,14 @@ def main():
         print("📚 Read the project README.md for complete instructions")
         print("=" * 60)
         
+        # Output the project directory path for shell navigation
+        print(f"\n📁 Project created in: {project_dir}")
+        print(f"💡 To navigate to your project, run: cd {project_dir}")
+        print(f"💡 Or use: cd {project_name}")
+        
+        # Output project name for shell capture (prefixed with special marker)
+        print(f"PROJECT_NAME_OUTPUT:{project_name}")
+        
     except Exception as e:
         print(f"❌ Error creating project: {e}")
         if project_dir.exists():
