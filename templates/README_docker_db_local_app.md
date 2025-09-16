@@ -85,6 +85,19 @@ If migrations fail:
    from app.models import *  # This will import all models automatically
    ```
 
+3. **If you get "relation does not exist" errors:**
+   ```bash
+   # Create a new migration to detect models
+   alembic revision --autogenerate -m 'Add models'
+   alembic upgrade head
+   ```
+
+4. **Check current migration status:**
+   ```bash
+   alembic current
+   alembic history
+   ```
+
 ## 🐚 Interactive Shell
 
 Start an interactive Python shell with database access:

@@ -75,7 +75,7 @@ def main():
         # Validate project name
         if not project_name.replace('-', '').replace('_', '').isalnum():
             print("❌ Project name can only contain letters, numbers, hyphens, and underscores")
-            sys.exit(1)
+        sys.exit(1)
     
         print()
     current_dir = Path(__file__).parent
@@ -182,6 +182,16 @@ if __name__ == "__main__":
 '''
         db_check_script.write_text(db_check_content)
         db_check_script.chmod(0o755)
+        
+        # Remove empty initial migration files
+        print("🧹 Cleaning up empty initial migrations...")
+        versions_dir = project_dir / "alembic" / "versions"
+        for migration_file in versions_dir.glob("*.py"):
+            if migration_file.name != "__init__.py":
+                content = migration_file.read_text()
+                if "pass" in content and "def upgrade()" in content:
+                    print(f"   Removing empty migration: {migration_file.name}")
+                    migration_file.unlink()
         
         # Ask user about user table
         print("👤 Do you want to include a User table?")
@@ -391,7 +401,10 @@ if __name__ == "__main__":
             print("9. alembic revision --autogenerate -m 'Initial migration'")
             print("10. alembic upgrade head")
             print("11. uvicorn app.main:app --reload")
-            print("\n🌐 Visit http://localhost:8000/docs for API documentation")
+            print("\n💡 If you get 'relation does not exist' errors, create a new migration:")
+            print("   alembic revision --autogenerate -m 'Add models'")
+            print("   alembic upgrade head")
+        print("\n🌐 Visit http://localhost:8000/docs for API documentation")
             print("📊 Database runs on port 54321 (no conflicts!)")
             print("\n💡 If you get connection errors, run: python check_db.py")
             print("💡 Database needs time to fully initialize after docker-compose up.")
