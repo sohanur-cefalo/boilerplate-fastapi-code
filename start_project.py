@@ -404,7 +404,7 @@ if __name__ == "__main__":
             print("\n💡 If you get 'relation does not exist' errors, create a new migration:")
             print("   alembic revision --autogenerate -m 'Add models'")
             print("   alembic upgrade head")
-        print("\n🌐 Visit http://localhost:8000/docs for API documentation")
+            print("\n🌐 Visit http://localhost:8000/docs for API documentation")
             print("📊 Database runs on port 54321 (no conflicts!)")
             print("\n💡 If you get connection errors, run: python check_db.py")
             print("💡 Database needs time to fully initialize after docker-compose up.")
