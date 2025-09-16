@@ -23,29 +23,40 @@ import os
 # Add the project root to Python path
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from sqlalchemy import select, func, desc
+from sqlalchemy import select, func, desc, text
 from sqlalchemy.orm import selectinload
 from app.db.session import SessionLocal, engine, Base
-from app.models import User
-from app.crud import (
-    get_user, get_user_by_email, get_users,
-    create_user, update_user, delete_user
-)
-from app.schemas.user import UserCreate, UserUpdate
+
+# Import models and CRUD operations if they exist
+try:
+    from app.models import User
+    from app.crud import (
+        get_user, get_user_by_email, get_users,
+        create_user, update_user, delete_user
+    )
+    from app.schemas.user import UserCreate, UserUpdate
+    HAS_USER = True
+except ImportError:
+    HAS_USER = False
 
 # Create database session
 db = SessionLocal()
 
-print("""
+# Build welcome message based on available features
+welcome_msg = """
 🚀 FastAPI Boilerplate Interactive Shell
 =======================================
 
 ✨ Pre-loaded with:
 - Database session: `db`
-- All models: `User`
-- All CRUD functions: `get_user`, `create_user`, etc.
 - SQLAlchemy functions: `select`, `func`, `desc`
 - Modern SQLAlchemy 2.0 syntax
+"""
+
+if HAS_USER:
+    welcome_msg += """
+- All models: `User`
+- All CRUD functions: `get_user`, `create_user`, etc.
 
 Quick Examples:
 ==============
@@ -67,10 +78,34 @@ Quick Examples:
    
 5. Ordering:
    users = db.scalars(select(User).order_by(User.created_at.desc())).all()
+"""
+else:
+    welcome_msg += """
+📝 Minimal project - no User table
+💡 Add your own models to app/models/ and import them here
 
+Quick Examples:
+==============
+
+1. Basic Database Operations:
+   # Check database connection
+   db.execute(select(1))
+   
+2. Create your own models:
+   # Add models to app/models/your_model.py
+   # Import them here: from app.models.your_model import YourModel
+   
+3. Raw SQL queries:
+   result = db.execute(text("SELECT version()"))
+   print(result.scalar())
+"""
+
+welcome_msg += """
 Type 'help()' for this message again.
 Type 'exit()' or 'quit()' to exit.
-""")
+"""
+
+print(welcome_msg)
 
 # Start interactive shell
 try:

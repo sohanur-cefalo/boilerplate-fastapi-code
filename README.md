@@ -40,6 +40,35 @@ git config --global init.defaultBranch main
 
 Then follow the setup instructions below!
 
+## 🐚 Interactive Shell
+
+Once your project is set up, you can use the interactive shell for development:
+
+```bash
+# For Docker DB + Local App or Local Development
+python management/shell.py                    # Standard Python shell
+python management/bpython_shell.py           # Enhanced with bpython (recommended)
+python management/ipython_shell.py           # Enhanced with ipython
+
+# For Full Docker setup
+docker-compose exec app python management/shell.py
+docker-compose exec app python management/bpython_shell.py
+docker-compose exec app python management/ipython_shell.py
+```
+
+This gives you access to:
+- Database session (`db`)
+- All your models
+- CRUD operations
+- FastAPI app instance
+
+**Shell Features:**
+- **Standard**: Basic Python shell
+- **bpython**: Syntax highlighting, autocompletion, auto-indentation
+- **ipython**: Advanced features, magic commands, rich display
+
+Perfect for testing queries, exploring data, and debugging!
+
 ## ⚙️ Git Configuration (Optional but Recommended)
 
 To avoid the "master" branch warning in future projects, configure git globally:

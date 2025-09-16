@@ -38,6 +38,32 @@ uvicorn app.main:app --reload
 # Database runs on port 54321 (no conflicts!)
 ```
 
+## 🐚 Interactive Shell
+
+Start an interactive Python shell with database access:
+
+```bash
+# Standard Python shell
+python management/shell.py
+
+# Enhanced shell with bpython (recommended)
+python management/bpython_shell.py
+
+# Enhanced shell with ipython
+python management/ipython_shell.py
+```
+
+This gives you access to:
+- Database session (`db`)
+- All your models
+- CRUD operations
+- FastAPI app instance
+
+**Shell Features:**
+- **Standard**: Basic Python shell
+- **bpython**: Syntax highlighting, autocompletion, auto-indentation
+- **ipython**: Advanced features, magic commands, rich display
+
 ### Stop Database
 ```bash
 # Stop database container

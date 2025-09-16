@@ -44,6 +44,32 @@ uvicorn app.main:app --reload
 # Visit http://localhost:8000/docs for API documentation
 ```
 
+## 🐚 Interactive Shell
+
+Start an interactive Python shell with database access:
+
+```bash
+# Standard Python shell
+python management/shell.py
+
+# Enhanced shell with bpython (recommended)
+python management/bpython_shell.py
+
+# Enhanced shell with ipython
+python management/ipython_shell.py
+```
+
+This gives you access to:
+- Database session (`db`)
+- All your models
+- CRUD operations
+- FastAPI app instance
+
+**Shell Features:**
+- **Standard**: Basic Python shell
+- **bpython**: Syntax highlighting, autocompletion, auto-indentation
+- **ipython**: Advanced features, magic commands, rich display
+
 ## 📝 Adding New Models
 
 ### 1. Create Model

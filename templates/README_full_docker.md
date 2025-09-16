@@ -14,6 +14,32 @@ docker-compose up
 # Database will be automatically set up!
 ```
 
+## 🐚 Interactive Shell
+
+Start an interactive Python shell with database access:
+
+```bash
+# Standard Python shell
+docker-compose exec app python management/shell.py
+
+# Enhanced shell with bpython (recommended)
+docker-compose exec app python management/bpython_shell.py
+
+# Enhanced shell with ipython
+docker-compose exec app python management/ipython_shell.py
+```
+
+This gives you access to:
+- Database session (`db`)
+- All your models
+- CRUD operations
+- FastAPI app instance
+
+**Shell Features:**
+- **Standard**: Basic Python shell
+- **bpython**: Syntax highlighting, autocompletion, auto-indentation
+- **ipython**: Advanced features, magic commands, rich display
+
 ### Stop Services
 ```bash
 # Stop all services
