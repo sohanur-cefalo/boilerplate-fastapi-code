@@ -19,6 +19,7 @@ import os
 import sys
 import shutil
 import subprocess
+import re
 from pathlib import Path
 
 def main():
@@ -35,7 +36,10 @@ def main():
         
         # Get project name with default
         default_name = "my-fastapi-project"
-        user_input = input(f"📝 Project name [{default_name}]: ").strip()
+        user_input = input(f"📝 Project name [{default_name}]: ")
+        
+        # Clean input - remove all whitespace and control characters
+        user_input = re.sub(r'[\r\n\t\f\v]', '', user_input).strip()
         
         # Use default if empty
         if not user_input:
