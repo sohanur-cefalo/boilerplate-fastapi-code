@@ -112,7 +112,64 @@ def main():
             )
             config_file.write_text(content)
         
-        # Ask user for development method first
+        # Ask user about user table
+        print("👤 Do you want to include a User table?")
+        print("1. Yes, include User table (default)")
+        print("2. No, create minimal project without User table")
+        print()
+        
+        try:
+            user_choice = input("Enter choice (1/2) [1]: ").strip()
+            if not user_choice:
+                user_choice = "1"
+        except (EOFError, KeyboardInterrupt):
+            print("\n✅ Using default choice: 1")
+            user_choice = "1"
+        
+        # Remove user table if not needed
+        if user_choice == "2":
+            print("🗑️  Removing User table and related files...")
+            # Remove user model
+            user_model_file = project_dir / "app" / "models" / "user.py"
+            if user_model_file.exists():
+                user_model_file.unlink()
+            
+            # Remove user schema
+            user_schema_file = project_dir / "app" / "schemas" / "user.py"
+            if user_schema_file.exists():
+                user_schema_file.unlink()
+            
+            # Remove user CRUD
+            user_crud_file = project_dir / "app" / "crud" / "user.py"
+            if user_crud_file.exists():
+                user_crud_file.unlink()
+            
+            # Remove user endpoints
+            user_endpoints_file = project_dir / "app" / "api" / "v1" / "endpoints" / "users.py"
+            if user_endpoints_file.exists():
+                user_endpoints_file.unlink()
+            
+            # Update models __init__.py
+            models_init_file = project_dir / "app" / "models" / "__init__.py"
+            if models_init_file.exists():
+                models_init_file.write_text("# Import all models here to make them discoverable for Alembic\n# Add your models below\n\n# Export all models\n__all__ = []\n")
+            
+            # Update schemas __init__.py
+            schemas_init_file = project_dir / "app" / "schemas" / "__init__.py"
+            if schemas_init_file.exists():
+                schemas_init_file.write_text("# Import all schemas here\n# Add your schemas below\n\n# Export all schemas\n__all__ = []\n")
+            
+            # Update CRUD __init__.py
+            crud_init_file = project_dir / "app" / "crud" / "__init__.py"
+            if crud_init_file.exists():
+                crud_init_file.write_text("# Import all CRUD operations here\n# Add your CRUD operations below\n\n# Export all CRUD operations\n__all__ = []\n")
+            
+            # Update API router
+            api_router_file = project_dir / "app" / "api" / "v1" / "api.py"
+            if api_router_file.exists():
+                api_router_file.write_text("from fastapi import APIRouter\n\n# Import your routers here\n# from app.api.v1.endpoints import your_router\n\napi_router = APIRouter()\n\n# Add your routers here\n# api_router.include_router(your_router.router, prefix=\"/your-endpoint\", tags=[\"your-tag\"])\n")
+        
+        # Ask user for development method
         print("📋 Choose your development method:")
         print("1. Full Docker (app + database)")
         print("2. Docker DB + Local App (recommended)")

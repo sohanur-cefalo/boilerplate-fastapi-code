@@ -15,8 +15,9 @@ git clone https://github.com/sohanur-cefalo/boilerplate-fastapi-code.git temp-bo
 - Clone the boilerplate repository
 - Start interactive project generator
 - Ask for project name (with default: `my-fastapi-project`)
-- Create a new project with minimalistic README
-- Ask if you want to start development immediately
+- Ask if you want to include a User table or create a minimal project
+- Ask for development method (Full Docker, Docker DB + Local App, or Local Development)
+- Create a new project with appropriate configuration
 - Clean up the temporary boilerplate folder
 
 **With specific project name:**
