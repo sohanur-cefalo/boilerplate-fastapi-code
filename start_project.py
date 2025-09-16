@@ -22,12 +22,32 @@ import subprocess
 from pathlib import Path
 
 def main():
-    if len(sys.argv) != 2:
-        print("❌ Usage: python start_project.py <project_name>")
-        print("Example: python start_project.py my_awesome_api")
-        sys.exit(1)
-    
-    project_name = sys.argv[1]
+    # Interactive project name input
+    if len(sys.argv) == 2:
+        # If project name provided as argument, use it
+        project_name = sys.argv[1]
+    else:
+        # Interactive mode - ask for project name
+        print("🚀 FastAPI Project Generator")
+        print("=" * 40)
+        print("Create a new FastAPI project with SQLAlchemy 2.0")
+        print()
+        
+        # Get project name with default
+        default_name = "my-fastapi-project"
+        project_name = input(f"📝 Project name [{default_name}]: ").strip()
+        
+        # Use default if empty
+        if not project_name:
+            project_name = default_name
+            print(f"✅ Using default name: {project_name}")
+        
+        # Validate project name
+        if not project_name.replace('-', '').replace('_', '').isalnum():
+            print("❌ Project name can only contain letters, numbers, hyphens, and underscores")
+            sys.exit(1)
+        
+        print()
     current_dir = Path(__file__).parent
     project_dir = current_dir.parent / project_name
     
@@ -400,16 +420,44 @@ docker-compose up -d
         print("="*60)
         print(f"\n📁 Project location: {project_dir}")
         print(f"\n📝 Project README: {project_dir}/README.md")
-        print("\n📋 Quick start:")
-        print("1. cd " + str(project_dir))
-        print("2. cp env.example .env")
-        print("3. Edit .env with your database settings")
-        print("4. pip install -r requirements.txt")
-        print("5. alembic revision --autogenerate -m 'Initial migration'")
-        print("6. alembic upgrade head")
-        print("7. uvicorn app.main:app --reload")
-        print("\n🌐 Visit http://localhost:8000/docs for API documentation")
-        print("\n📚 Read the project README.md for detailed instructions")
+        
+        # Ask if user wants to start development
+        print("\n" + "="*40)
+        print("🚀 Next Steps")
+        print("="*40)
+        
+        start_dev = input("\n❓ Start development now? (y/N): ").strip().lower()
+        
+        if start_dev in ['y', 'yes']:
+            print("\n📋 Choose your development method:")
+            print("1. Docker (recommended - includes database)")
+            print("2. Local development (requires PostgreSQL)")
+            
+            choice = input("\nEnter choice (1/2) [1]: ").strip()
+            
+            if choice == "2":
+                print("\n🔧 Local development setup:")
+                print(f"1. cd {project_dir}")
+                print("2. cp env.example .env")
+                print("3. Edit .env with your database settings")
+                print("4. pip install -r requirements.txt")
+                print("5. alembic revision --autogenerate -m 'Initial migration'")
+                print("6. alembic upgrade head")
+                print("7. uvicorn app.main:app --reload")
+                print("\n🌐 Visit http://localhost:8000/docs for API documentation")
+            else:
+                print("\n🐳 Docker development setup:")
+                print(f"1. cd {project_dir}")
+                print("2. docker-compose up")
+                print("\n🌐 Visit http://localhost:8000/docs for API documentation")
+                print("📊 Database will be automatically set up!")
+        else:
+            print("\n📋 Quick start commands:")
+            print(f"1. cd {project_dir}")
+            print("2. Read README.md for detailed instructions")
+            print("3. Choose Docker or local development")
+        
+        print("\n📚 Read the project README.md for complete instructions")
         print("="*60)
         
     except Exception as e:

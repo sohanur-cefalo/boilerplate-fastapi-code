@@ -2,8 +2,28 @@
 
 A production-ready FastAPI boilerplate with modern SQLAlchemy 2.0, PostgreSQL, and Alembic migrations. Perfect for starting new projects quickly!
 
-## 🚀 Quick Start (One Command)
+## 🚀 Quick Start (Interactive)
 
+```bash
+git clone https://github.com/sohanur-cefalo/boilerplate-fastapi-code.git temp-boilerplate && cd temp-boilerplate && python start_project.py && cd .. && rm -rf temp-boilerplate
+```
+> 📋 **Copy this command** - Click the code block above and press `Ctrl+C` (or `Cmd+C` on Mac)
+
+**This will:**
+- Clone the boilerplate repository
+- Start interactive project generator
+- Ask for project name (with default: `my-fastapi-project`)
+- Create a new project with minimalistic README
+- Ask if you want to start development immediately
+- Clean up the temporary boilerplate folder
+
+**With specific project name:**
+```bash
+git clone https://github.com/sohanur-cefalo/boilerplate-fastapi-code.git temp-boilerplate && cd temp-boilerplate && python start_project.py my-awesome-api && cd .. && rm -rf temp-boilerplate
+```
+> 📋 **Copy this command** - Click the code block above and press `Ctrl+C` (or `Cmd+C` on Mac)
+
+**Alternative (manual setup):**
 ```bash
 git clone https://github.com/sohanur-cefalo/boilerplate-fastapi-code.git my-new-project && cd my-new-project && rm -rf .git && git init && git branch -m main && git add . && git commit -m "Initial commit"
 ```
@@ -37,12 +57,18 @@ This will set 'main' as the default branch name for all new git repositories you
 The fastest way to get started is with Docker:
 
 ```bash
-# Clone and start with Docker
-git clone https://github.com/sohanur-cefalo/boilerplate-fastapi-code.git my-project
-cd my-project
-docker-compose up
+# Interactive project creation
+git clone https://github.com/sohanur-cefalo/boilerplate-fastapi-code.git temp-boilerplate && cd temp-boilerplate && python start_project.py && cd .. && rm -rf temp-boilerplate
 ```
-> 📋 **Copy these commands** - Click the code block above and press `Ctrl+C` (or `Cmd+C` on Mac)
+> 📋 **Copy this command** - Click the code block above and press `Ctrl+C` (or `Cmd+C` on Mac)
+
+**This will:**
+- Start interactive project generator
+- Ask for project name (with default)
+- Create a new project with minimalistic README
+- Ask if you want to start development
+- Choose Docker option for instant setup
+- Clean up temporary files
 
 **What Docker does automatically:**
 - ✅ Sets up PostgreSQL database
@@ -140,16 +166,16 @@ git commit -m "Initial commit"
 
 ### Method 3: Docker (Quickest)
 ```bash
-# Clone the repository
-git clone https://github.com/sohanur-cefalo/boilerplate-fastapi-code.git my-awesome-api
-cd my-awesome-api
-
-# Start with Docker (includes database)
-docker-compose up
+# Interactive project creation
+git clone https://github.com/sohanur-cefalo/boilerplate-fastapi-code.git temp-boilerplate && cd temp-boilerplate && python start_project.py && cd .. && rm -rf temp-boilerplate
 ```
 > 📋 **Copy these commands** - Click the code block above and press `Ctrl+C` (or `Cmd+C` on Mac)
 
-**Docker automatically sets up everything!**
+**This starts an interactive project generator that will:**
+- Ask for project name (with default)
+- Create a new project with minimalistic README
+- Ask if you want to start development immediately
+- Guide you through Docker setup
 
 Then follow the setup instructions in your new project directory!
 
@@ -957,18 +983,14 @@ This project is licensed under the MIT License.
 ## 🎉 Ready to Start?
 
 ### For User-Based Applications:
-1. Clone this repository: `git clone https://github.com/sohanur-cefalo/boilerplate-fastapi-code.git my-project`
-2. Remove git history: `rm -rf .git && git init && git add . && git commit -m "Initial commit"`
-3. Run `python start_project.py your_project_name`
-4. Follow Option 1 setup instructions
-5. Start building your user management features!
+1. Run interactive generator: `git clone https://github.com/sohanur-cefalo/boilerplate-fastapi-code.git temp-boilerplate && cd temp-boilerplate && python start_project.py && cd .. && rm -rf temp-boilerplate`
+2. Follow the interactive prompts
+3. Start building your user management features!
 
 ### For Custom Applications:
-1. Clone this repository: `git clone https://github.com/sohanur-cefalo/boilerplate-fastapi-code.git my-project`
-2. Remove git history: `rm -rf .git && git init && git add . && git commit -m "Initial commit"`
-3. Run `python start_project.py your_project_name`
-4. Follow Option 2 setup instructions
-5. Start building your custom models!
+1. Run interactive generator: `git clone https://github.com/sohanur-cefalo/boilerplate-fastapi-code.git temp-boilerplate && cd temp-boilerplate && python start_project.py && cd .. && rm -rf temp-boilerplate`
+2. Follow the interactive prompts
+3. Start building your custom models!
 
 ### What You Get Either Way:
 - ✅ Production-ready FastAPI + SQLAlchemy 2.0 setup
