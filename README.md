@@ -5,11 +5,32 @@ A production-ready FastAPI boilerplate with modern SQLAlchemy 2.0, PostgreSQL, a
 ## 🚀 Quick Start (One Command)
 
 ```bash
-git clone https://github.com/sohanur-cefalo/boilerplate-fastapi-code.git my-new-project && cd my-new-project && rm -rf .git && git init && git add . && git commit -m "Initial commit"
+git clone https://github.com/sohanur-cefalo/boilerplate-fastapi-code.git my-new-project && cd my-new-project && rm -rf .git && git init && git branch -m main && git add . && git commit -m "Initial commit"
+```
+> 📋 **Copy this command** - Click the code block above and press `Ctrl+C` (or `Cmd+C` on Mac)
+
+**Note:** If you get a git warning about the default branch name, you can configure git globally to use 'main' as the default:
+```bash
+git config --global init.defaultBranch main
 ```
 > 📋 **Copy this command** - Click the code block above and press `Ctrl+C` (or `Cmd+C` on Mac)
 
 Then follow the setup instructions below!
+
+## ⚙️ Git Configuration (Optional but Recommended)
+
+To avoid the "master" branch warning in future projects, configure git globally:
+
+```bash
+# Set 'main' as the default branch name for all new repositories
+git config --global init.defaultBranch main
+
+# Verify the configuration
+git config --global init.defaultBranch
+```
+> 📋 **Copy these commands** - Click the code block above and press `Ctrl+C` (or `Cmd+C` on Mac)
+
+This will set 'main' as the default branch name for all new git repositories you create.
 
 ## 🎯 How to Use This Repository
 
@@ -64,6 +85,7 @@ rm -rf .git
 
 # Initialize new git repository
 git init
+git branch -m main
 git add .
 git commit -m "Initial commit"
 ```
@@ -87,6 +109,7 @@ rm -rf .git
 
 # Initialize new git repository
 git init
+git branch -m main
 git add .
 git commit -m "Initial commit"
 ```
@@ -113,6 +136,9 @@ rm -rf .git
 
 # Initialize a new git repository
 git init
+
+# Rename branch to main (to avoid master warning)
+git branch -m main
 
 # Add all files to the new repository
 git add .
