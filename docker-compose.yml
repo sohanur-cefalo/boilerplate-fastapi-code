@@ -11,18 +11,30 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U fastapi_user -d fastapi_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   app:
     build: .
     ports:
       - "8000:8000"
     environment:
+      # Database configuration for Docker
       DATABASE_URL: postgresql://fastapi_user:fastapi_password@db:5432/fastapi_db
+      # Application settings
+      DEBUG: "True"
+      PROJECT_NAME: "FastAPI Project"
+      VERSION: "1.0.0"
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     volumes:
       - .:/app
     command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    restart: unless-stopped
 
 volumes:
   postgres_data:

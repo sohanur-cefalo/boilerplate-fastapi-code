@@ -32,6 +32,27 @@ git config --global init.defaultBranch
 
 This will set 'main' as the default branch name for all new git repositories you create.
 
+## 🐳 Docker Quick Start
+
+The fastest way to get started is with Docker:
+
+```bash
+# Clone and start with Docker
+git clone https://github.com/sohanur-cefalo/boilerplate-fastapi-code.git my-project
+cd my-project
+docker-compose up
+```
+> 📋 **Copy these commands** - Click the code block above and press `Ctrl+C` (or `Cmd+C` on Mac)
+
+**What Docker does automatically:**
+- ✅ Sets up PostgreSQL database
+- ✅ Configures all environment variables
+- ✅ Builds and runs the FastAPI application
+- ✅ Enables hot reload for development
+- ✅ Creates persistent database storage
+
+Visit http://localhost:8000/docs for API documentation!
+
 ## 🎯 How to Use This Repository
 
 This boilerplate provides **two ways** to start your FastAPI project:
@@ -116,6 +137,19 @@ git commit -m "Initial commit"
 > 📋 **Copy these commands** - Click the code block above and press `Ctrl+C` (or `Cmd+C` on Mac)
 
 **Follow the setup instructions below**
+
+### Method 3: Docker (Quickest)
+```bash
+# Clone the repository
+git clone https://github.com/sohanur-cefalo/boilerplate-fastapi-code.git my-awesome-api
+cd my-awesome-api
+
+# Start with Docker (includes database)
+docker-compose up
+```
+> 📋 **Copy these commands** - Click the code block above and press `Ctrl+C` (or `Cmd+C` on Mac)
+
+**Docker automatically sets up everything!**
 
 Then follow the setup instructions in your new project directory!
 
