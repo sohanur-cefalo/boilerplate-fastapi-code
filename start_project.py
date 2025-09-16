@@ -36,18 +36,32 @@ def main():
         
         # Get project name with default
         default_name = "my-fastapi-project"
-        user_input = input(f"📝 Project name [{default_name}]: ")
         
-        # Clean input - remove all whitespace and control characters
-        user_input = re.sub(r'[\r\n\t\f\v]', '', user_input).strip()
-        
-        # Use default if empty
-        if not user_input:
+        try:
+            # Try to read input with proper handling
+            user_input = input(f"📝 Project name [{default_name}]: ")
+            
+            # Debug: show what we received
+            print(f"DEBUG: Raw input: {repr(user_input)}")
+            
+            # Clean input - remove all non-alphanumeric characters except hyphens and underscores
+            user_input = re.sub(r'[^\w\-_]', '', user_input)
+            
+            # Debug: show what we have after cleaning
+            print(f"DEBUG: Cleaned input: {repr(user_input)}")
+            
+            # Use default if empty after cleaning
+            if not user_input:
+                project_name = default_name
+                print(f"✅ Using default name: {project_name}")
+            else:
+                project_name = user_input
+                print(f"✅ Using name: {project_name}")
+                
+        except (EOFError, KeyboardInterrupt):
+            # Handle Ctrl+C or EOF
+            print(f"\n✅ Using default name: {default_name}")
             project_name = default_name
-            print(f"✅ Using default name: {project_name}")
-        else:
-            project_name = user_input
-            print(f"✅ Using name: {project_name}")
         
         # Validate project name
         if not project_name.replace('-', '').replace('_', '').isalnum():
