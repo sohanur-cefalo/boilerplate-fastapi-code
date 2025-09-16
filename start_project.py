@@ -75,7 +75,7 @@ def main():
         # Validate project name
         if not project_name.replace('-', '').replace('_', '').isalnum():
             print("❌ Project name can only contain letters, numbers, hyphens, and underscores")
-        sys.exit(1)
+            sys.exit(1)
     
         print()
     current_dir = Path(__file__).parent
@@ -94,12 +94,15 @@ def main():
         # Copy boilerplate code
         print("📋 Copying boilerplate code...")
         shutil.copytree(current_dir, project_dir, ignore=shutil.ignore_patterns(
-            '__pycache__', '*.pyc', '.git', '.DS_Store', 'alembic/versions/*.py', 'templates'
+            '__pycache__', '*.pyc', '.git', '.DS_Store', 'alembic/versions/*.py', 'templates', 'start_project.py'
         ))
+        print("✅ Copy completed")
         
         # Ensure alembic/versions directory exists
+        print("📁 Creating alembic/versions directory...")
         versions_dir = project_dir / "alembic" / "versions"
         versions_dir.mkdir(parents=True, exist_ok=True)
+        print("✅ Alembic directory created")
         
         # Update project name in config
         print("⚙️  Updating project configuration...")
@@ -133,6 +136,7 @@ def main():
                 
                 # Write the updated content
                 alembic_env_file.write_text('\n'.join(new_lines))
+        print("✅ Alembic configuration updated")
         
         # Create database readiness check script
         print("📝 Creating database readiness check script...")
