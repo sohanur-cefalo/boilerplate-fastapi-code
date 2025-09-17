@@ -1,0 +1,30 @@
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+sqlalchemy==2.0.23
+alembic==1.12.1
+psycopg2-binary==2.9.9
+pydantic==2.5.0
+pydantic-settings==2.1.0
+python-dotenv==1.0.0
+python-multipart==0.0.6
+email-validator==2.3.0
+{% if cookiecutter.include_testing == "pytest" -%}
+pytest==7.4.3
+pytest-asyncio==0.21.1
+httpx==0.25.2
+{% endif -%}
+{% if cookiecutter.include_cors == "yes" -%}
+fastapi-cors==0.0.6
+{% endif -%}
+{% if cookiecutter.include_rate_limiting == "yes" -%}
+slowapi==0.1.9
+{% endif -%}
+{% if cookiecutter.include_authentication == "jwt" -%}
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+python-multipart==0.0.6
+{% endif -%}
+# Interactive shells
+ipython==8.17.2
+jedi==0.19.1
+bpython==0.24

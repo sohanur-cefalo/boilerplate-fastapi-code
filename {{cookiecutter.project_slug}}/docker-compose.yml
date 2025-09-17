@@ -1,0 +1,36 @@
+{% if cookiecutter.include_docker == "yes" -%}
+services:
+  {% if cookiecutter.development_environment == "full_docker" -%}
+  app:
+    build: .
+    ports:
+      - "{{cookiecutter.api_port}}:{{cookiecutter.api_port}}"
+    environment:
+      - DATABASE_URL=postgresql://{{cookiecutter.database_user}}:{{cookiecutter.database_password}}@db:5432/{{cookiecutter.database_name}}
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - .:/app
+    command: uvicorn app.main:app --host 0.0.0.0 --port {{cookiecutter.api_port}} --reload
+
+  {% endif -%}
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: {{cookiecutter.database_user}}
+      POSTGRES_PASSWORD: {{cookiecutter.database_password}}
+      POSTGRES_DB: {{cookiecutter.database_name}}
+    ports:
+      - "{{cookiecutter.database_port}}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U {{cookiecutter.database_user}} -d {{cookiecutter.database_name}}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:
+{% endif -%}

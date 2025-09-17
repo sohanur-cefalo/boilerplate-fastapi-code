@@ -1,1083 +1,364 @@
-# FastAPI Boilerplate with SQLAlchemy 2.0
+# 🍪 FastAPI Cookiecutter Template
 
-A production-ready FastAPI boilerplate with modern SQLAlchemy 2.0, PostgreSQL, and Alembic migrations. Perfect for starting new projects quickly!
+**A modern, production-ready Cookiecutter template for FastAPI projects with SQLAlchemy 2.0, PostgreSQL, and comprehensive configuration options.**
 
-## 🚀 Quick Start (Interactive)
-
-```bash
-git clone https://github.com/sohanur-cefalo/boilerplate-fastapi-code.git temp-boilerplate && cd temp-boilerplate && python start_project.py && cd .. && rm -rf temp-boilerplate || (cd .. && rm -rf temp-boilerplate && exit 1)
-```
-> 📋 **Copy this command** - Click the code block above and press `Ctrl+C` (or `Cmd+C` on Mac)
-> 
-> **Note:** After running this command, the script will show you the project directory path. Navigate to it with `cd your-project-name` (replace `your-project-name` with the actual name you entered during the interactive setup).
-
-**This will:**
-- Clone the boilerplate repository
-- Start interactive project generator
-- Ask for project name (with default: `my-fastapi-project`)
-- Ask if you want to include a User table or create a minimal project
-- Ask for development method (Full Docker, Docker DB + Local App, or Local Development)
-- Create a new project with appropriate configuration
-- Clean up the temporary boilerplate folder
-
-**With specific project name:**
-```bash
-git clone https://github.com/sohanur-cefalo/boilerplate-fastapi-code.git temp-boilerplate && cd temp-boilerplate && python start_project.py my-awesome-api && cd ../my-awesome-api && rm -rf ../temp-boilerplate || (cd .. && rm -rf temp-boilerplate && exit 1)
-```
-> 📋 **Copy this command** - Click the code block above and press `Ctrl+C` (or `Cmd+C` on Mac)
-
-**Alternative (manual setup):**
-```bash
-git clone https://github.com/sohanur-cefalo/boilerplate-fastapi-code.git my-new-project && cd my-new-project && rm -rf .git && git init && git branch -m main && git add . && git commit -m "Initial commit"
-```
-> 📋 **Copy this command** - Click the code block above and press `Ctrl+C` (or `Cmd+C` on Mac)
-
-**Note:** If you get a git warning about the default branch name, you can configure git globally to use 'main' as the default:
-```bash
-git config --global init.defaultBranch main
-```
-> 📋 **Copy this command** - Click the code block above and press `Ctrl+C` (or `Cmd+C` on Mac)
-
-Then follow the setup instructions below!
-
-## 🐚 Interactive Shell
-
-Once your project is set up, you can use the interactive shell for development:
-
-```bash
-# For Docker DB + Local App or Local Development
-python management/shell.py                    # Standard Python shell
-python management/bpython_shell.py           # Enhanced with bpython (recommended)
-python management/ipython_shell.py           # Enhanced with ipython
-
-# For Full Docker setup
-docker-compose exec app python management/shell.py
-docker-compose exec app python management/bpython_shell.py
-docker-compose exec app python management/ipython_shell.py
-```
-
-This gives you access to:
-- Database session (`db`)
-- All your models
-- CRUD operations
-- FastAPI app instance
-
-**Shell Features:**
-- **Standard**: Basic Python shell
-- **bpython**: Syntax highlighting, autocompletion, auto-indentation
-- **ipython**: Advanced features, magic commands, rich display
-
-Perfect for testing queries, exploring data, and debugging!
-
-## ⚙️ Git Configuration (Optional but Recommended)
-
-To avoid the "master" branch warning in future projects, configure git globally:
-
-```bash
-# Set 'main' as the default branch name for all new repositories
-git config --global init.defaultBranch main
-
-# Verify the configuration
-git config --global init.defaultBranch
-```
-> 📋 **Copy these commands** - Click the code block above and press `Ctrl+C` (or `Cmd+C` on Mac)
-
-This will set 'main' as the default branch name for all new git repositories you create.
-
-## 🐳 Docker Quick Start
-
-The fastest way to get started is with Docker:
-
-```bash
-# Interactive project creation
-git clone https://github.com/sohanur-cefalo/boilerplate-fastapi-code.git temp-boilerplate && cd temp-boilerplate && python start_project.py && cd .. && rm -rf temp-boilerplate || (cd .. && rm -rf temp-boilerplate && exit 1)
-```
-> 📋 **Copy this command** - Click the code block above and press `Ctrl+C` (or `Cmd+C` on Mac)
-
-**This will:**
-- Start interactive project generator
-- Ask for project name (with default)
-- Create a new project with minimalistic README
-- Ask if you want to start development
-- Choose Docker option for instant setup
-- Clean up temporary files
-
-**What Docker does automatically:**
-- ✅ Sets up PostgreSQL database
-- ✅ Configures all environment variables
-- ✅ Builds and runs the FastAPI application
-- ✅ Enables hot reload for development
-- ✅ Creates persistent database storage
-
-Visit http://localhost:8000/docs for API documentation!
-
-## 🛠️ Alternative Development Workflow
-
-If you prefer to work with the boilerplate directly and manage your own environment:
-
-### Method: Clone + Virtual Environment + Docker DB
-
-```bash
-# 1. Clone the boilerplate directly
-git clone https://github.com/sohanur-cefalo/boilerplate-fastapi-code.git my-project
-cd my-project
-
-# 2. Create virtual environment
-python -m venv env
-
-# 3. Activate virtual environment
-# On Windows:
-env\Scripts\activate
-# On macOS/Linux:
-source env/bin/activate
-
-# 4. Install dependencies
-pip install -r requirements.txt
-
-# 5. Start only the database with Docker
-docker-compose up db -d
-
-# 6. Copy environment file
-cp env.example .env
-
-# 7. Run migrations
-alembic revision --autogenerate -m "Initial migration"
-alembic upgrade head
-
-# 8. Start the application
-uvicorn app.main:app --reload
-```
-> 📋 **Copy these commands** - Click the code block above and press `Ctrl+C` (or `Cmd+C` on Mac)
-
-**Benefits of this approach:**
-- ✅ **Full control**: Work directly with the boilerplate code
-- ✅ **Local development**: FastAPI runs locally with hot reload
-- ✅ **Database isolation**: PostgreSQL runs in Docker (port 54321)
-- ✅ **No port conflicts**: Database uses 54321, app uses 8000
-- ✅ **Easy debugging**: Direct access to Python environment
-
-## 🎯 How to Use This Repository
-
-This boilerplate provides **two ways** to start your FastAPI project:
-
-### Option 1: Quick Start with User Table (Recommended for most projects)
-- Includes a complete User model with CRUD operations
-- Ready-to-use authentication foundation
-- Perfect for user-based applications
-- **Start here if you need user management**
-
-### Option 2: Minimal Start (Clean slate)
-- No pre-built models or endpoints
-- Just the core FastAPI + SQLAlchemy setup
-- Perfect for API-only services or custom architectures
-- **Start here if you want complete control**
-
-Both options include the same modern tech stack and project structure!
-
-## 🤔 Which Option Should I Choose?
-
-### Choose **Option 1 (With User Table)** if:
-- ✅ You're building a user-based application
-- ✅ You need authentication or user management
-- ✅ You want to get started quickly with a working example
-- ✅ You're learning FastAPI and want to see a complete model implementation
-- ✅ You plan to add user features later
-
-### Choose **Option 2 (Minimal Setup)** if:
-- ✅ You're building a microservice or API-only service
-- ✅ You have specific architectural requirements
-- ✅ You want complete control over your data models
-- ✅ You're building a non-user-based application (e.g., data processing, IoT)
-- ✅ You prefer to build everything from scratch
-
-**Not sure?** Start with **Option 1** - you can always remove the User table later using the cleanup instructions!
-
-## 🚀 Quick Project Creation
-
-### Method 1: Clone and Use Script (Recommended)
-```bash
-# Clone this boilerplate
-git clone https://github.com/sohanur-cefalo/boilerplate-fastapi-code.git my-awesome-api
-cd my-awesome-api
-
-# Use the included script to create a fresh project
-python start_project.py my_fresh_project
-
-# Remove git folder to start fresh (no remote URL)
-cd my_fresh_project
-rm -rf .git
-
-# Initialize new git repository
-git init
-git branch -m main
-git add .
-git commit -m "Initial commit"
-```
-> 📋 **Copy these commands** - Click the code block above and press `Ctrl+C` (or `Cmd+C` on Mac)
-
-**This will:**
-- Copy all boilerplate code to 'my_fresh_project' directory
-- Update project name in configuration
-- Remove old git history and remote URL
-- Initialize fresh git repository
-- Provide next steps instructions
-
-### Method 2: Direct Clone
-```bash
-# Clone directly to your project name
-git clone https://github.com/sohanur-cefalo/boilerplate-fastapi-code.git my-awesome-api
-cd my-awesome-api
-
-# Remove git folder to start fresh (no remote URL)
-rm -rf .git
-
-# Initialize new git repository
-git init
-git branch -m main
-git add .
-git commit -m "Initial commit"
-```
-> 📋 **Copy these commands** - Click the code block above and press `Ctrl+C` (or `Cmd+C` on Mac)
-
-**Follow the setup instructions below**
-
-### Method 3: Docker (Quickest)
-```bash
-# Interactive project creation
-git clone https://github.com/sohanur-cefalo/boilerplate-fastapi-code.git temp-boilerplate && cd temp-boilerplate && python start_project.py && cd .. && rm -rf temp-boilerplate || (cd .. && rm -rf temp-boilerplate && exit 1)
-```
-> 📋 **Copy these commands** - Click the code block above and press `Ctrl+C` (or `Cmd+C` on Mac)
-
-**This starts an interactive project generator that will:**
-- Ask for project name (with default)
-- Create a new project with minimalistic README
-- Ask if you want to start development immediately
-- Guide you through Docker setup
-
-Then follow the setup instructions in your new project directory!
-
-## 🔄 Starting Fresh (No Remote URL)
-
-When you clone this boilerplate, you get the original git history and remote URL. To start completely fresh:
-
-### Why Remove Git History?
-- ✅ **No remote URL**: Your project won't be connected to this boilerplate repository
-- ✅ **Clean history**: Start with a fresh commit history
-- ✅ **Your ownership**: The project becomes completely yours
-- ✅ **No confusion**: Clear separation from the boilerplate
-
-### How to Remove Git History:
-```bash
-# After cloning, remove the git folder
-rm -rf .git
-
-# Initialize a new git repository
-git init
-
-# Rename branch to main (to avoid master warning)
-git branch -m main
-
-# Add all files to the new repository
-git add .
-
-# Make your first commit
-git commit -m "Initial commit"
-
-# Optional: Add your own remote repository
-git remote add origin https://github.com/yourusername/your-project.git
-git push -u origin main
-```
-> 📋 **Copy these commands** - Click the code block above and press `Ctrl+C` (or `Cmd+C` on Mac)
-
-## 🚀 Features
-
-- **FastAPI** - Modern, fast web framework
-- **SQLAlchemy 2.0** - Latest ORM with `Mapped` annotations and type safety
-- **PostgreSQL** - Production-ready database
-- **Alembic** - Database migrations
-- **Pydantic** - Data validation and settings
-- **Interactive Shells** - bpython, IPython, and standard Python shells
-- **Type Safety** - Full type hints throughout
-- **Modular Structure** - Clean, scalable architecture
-
-## 📁 Project Structure
-
-### Option 1: With User Table (Default)
-```
-boilerplate-fastapi-code/
-├── app/
-│   ├── core/
-│   │   └── config.py          # Application settings
-│   ├── db/
-│   │   └── session.py         # Database connection
-│   ├── models/
-│   │   ├── __init__.py
-│   │   └── user.py            # ✅ User model (ready to use)
-│   ├── schemas/
-│   │   ├── __init__.py
-│   │   └── user.py            # ✅ User Pydantic schemas
-│   ├── crud/
-│   │   ├── __init__.py
-│   │   └── user.py            # ✅ User CRUD operations
-│   ├── api/
-│   │   └── v1/
-│   │       ├── api.py         # API router (includes users)
-│   │       └── endpoints/
-│   │           └── users.py   # ✅ User API endpoints
-│   └── main.py                # FastAPI app
-├── management/                # Interactive shells
-├── alembic/                   # Database migrations
-├── requirements.txt
-├── env.example
-└── README.md
-```
-
-### Option 2: Minimal Setup (After cleanup)
-```
-boilerplate-fastapi-code/
-├── app/
-│   ├── core/
-│   │   └── config.py          # Application settings
-│   ├── db/
-│   │   └── session.py         # Database connection
-│   ├── models/
-│   │   └── __init__.py        # Empty - ready for your models
-│   ├── schemas/
-│   │   └── __init__.py        # Empty - ready for your schemas
-│   ├── crud/
-│   │   └── __init__.py        # Empty - ready for your CRUD
-│   ├── api/
-│   │   └── v1/
-│   │       ├── api.py         # API router (no endpoints)
-│   │       └── endpoints/     # Empty - ready for your endpoints
-│   └── main.py                # FastAPI app
-├── management/                # Interactive shells
-├── alembic/                   # Database migrations
-├── requirements.txt
-├── env.example
-└── README.md
-```
-
-### Key Differences:
-- **Option 1**: Includes complete User model with CRUD and API endpoints
-- **Option 2**: Clean slate with empty model/schema/crud/endpoint directories
-- **Both**: Same core structure, database setup, and management tools
+[![Python](https://img.shields.io/badge/Python-3.8%2B-blue.svg)](https://python.org)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.104%2B-green.svg)](https://fastapi.tiangolo.com)
+[![SQLAlchemy](https://img.shields.io/badge/SQLAlchemy-2.0-red.svg)](https://sqlalchemy.org)
+[![Cookiecutter](https://img.shields.io/badge/Cookiecutter-Template-yellow.svg)](https://github.com/cookiecutter/cookiecutter)
 
 ## 🚀 Quick Start
 
-Choose your preferred setup option:
-
-### Option 1: With User Table (Ready-to-go)
-
-Perfect if you need user management, authentication, or user-based features.
-
-#### 1. Clone and Setup
+### 1. Install Cookiecutter
 ```bash
-# Clone this boilerplate
-git clone https://github.com/sohanur-cefalo/boilerplate-fastapi-code.git my-new-project
-cd my-new-project
+pip install cookiecutter
+```
 
-# Install dependencies
+### 2. Generate Your Project
+```bash
+# Interactive setup (recommended for first-time users)
+cookiecutter https://github.com/sohanur-cefalo/boilerplate-fastapi-code.git
+
+# Quick generation with defaults
+cookiecutter https://github.com/sohanur-cefalo/boilerplate-fastapi-code.git --no-input
+
+# Custom configuration
+cookiecutter https://github.com/sohanur-cefalo/boilerplate-fastapi-code.git --no-input \
+  project_name="My Awesome API" \
+  include_user_model=yes \
+  include_authentication=jwt \
+  development_environment=docker_db_local_app
+```
+
+### 3. Start Development
+```bash
+cd your-project-name
+python -m venv venv && source venv/bin/activate
 pip install -r requirements.txt
-```
-> 📋 **Copy these commands** - Click the code block above and press `Ctrl+C` (or `Cmd+C` on Mac)
-
-#### 2. Configure Database
-```bash
-# Copy environment file
-cp env.example .env
-
-# Edit .env with your database settings
-DATABASE_URL=postgresql://username:password@localhost:5432/your_database_name
-DEBUG=True
-PROJECT_NAME=My New Project
-VERSION=1.0.0
-```
-
-#### 3. Run Migrations
-```bash
-# Create initial migration (includes User table)
-alembic revision --autogenerate -m "Initial migration with User table"
-
-# Apply migrations
+docker-compose up db -d
 alembic upgrade head
-```
-> 📋 **Copy these commands** - Click the code block above and press `Ctrl+C` (or `Cmd+C` on Mac)
-
-#### 4. Start the Application
-```bash
-# Development server
 uvicorn app.main:app --reload
-
-# Visit http://localhost:8000/docs for API documentation
-# Test the User API at http://localhost:8000/api/v1/users/
 ```
-> 📋 **Copy these commands** - Click the code block above and press `Ctrl+C` (or `Cmd+C` on Mac)
 
-**You're ready!** Your API includes:
-- Complete User CRUD operations
-- User authentication foundation
-- Interactive API documentation
+### 4. Access Your API
+- **📚 API Docs**: http://localhost:8000/docs
+- **❤️ Health Check**: http://localhost:8000/health
+
+## ⚡ What You Get
+
+### 🏗️ **Flexible Architecture**
+- **User Management**: Optional complete user CRUD with authentication
+- **Authentication**: None, Basic, or JWT with login/logout
+- **Development**: Docker+Local, Full Docker, or Local development
+- **Testing**: pytest, unittest, or none
+- **CI/CD**: GitHub Actions workflows
+
+### 🔧 **Modern Tech Stack**
+- **FastAPI** - High-performance async web framework
+- **SQLAlchemy 2.0** - Modern ORM with type annotations
+- **PostgreSQL** - Production-ready database
+- **Alembic** - Database migrations
+- **Pydantic** - Data validation and settings
+- **Docker** - Containerization support
+
+### 🎯 **Production Ready**
+- Type-safe code throughout
+- Comprehensive test suites
+- Docker configurations
+- Environment management
 - Database migrations
+- Interactive development shells
+- CORS and rate limiting
+- Structured logging options
 
----
+## 📋 Template Options
 
-### Option 2: Minimal Setup (Clean slate)
+| Option | Choices | Description |
+|--------|---------|-------------|
+| **User Model** | `yes` / `no` | Complete user management system |
+| **Authentication** | `none` / `basic` / `jwt` | Authentication implementation |
+| **Environment** | `docker_db_local_app` / `full_docker` / `local_development` | Development setup |
+| **Testing** | `pytest` / `unittest` / `none` | Testing framework |
+| **Docker** | `yes` / `no` | Docker configuration |
+| **GitHub Actions** | `yes` / `no` | CI/CD pipeline |
+| **CORS** | `yes` / `no` | Cross-origin support |
+| **Rate Limiting** | `yes` / `no` | API rate limiting |
 
-Perfect if you want to build your own models and don't need the User table.
+## 🎨 Project Examples
 
-#### 1. Clone and Setup
+### Minimal API Service
 ```bash
-# Clone this boilerplate
-git clone https://github.com/sohanur-cefalo/boilerplate-fastapi-code.git my-new-project
-cd my-new-project
+cookiecutter https://github.com/sohanur-cefalo/boilerplate-fastapi-code.git --no-input \
+  project_name="Simple API" \
+  include_user_model=no \
+  include_authentication=none \
+  development_environment=full_docker \
+  include_testing=none
+```
+**Result**: Clean API with Docker, no user management, no tests
+
+### Full-Featured Web Application
+```bash
+cookiecutter https://github.com/sohanur-cefalo/boilerplate-fastapi-code.git --no-input \
+  project_name="My Web App" \
+  include_user_model=yes \
+  include_authentication=jwt \
+  development_environment=docker_db_local_app \
+  include_testing=pytest \
+  include_github_actions=yes
+```
+**Result**: Complete web app with user auth, JWT, tests, and CI/CD
+
+### Enterprise API
+```bash
+cookiecutter https://github.com/sohanur-cefalo/boilerplate-fastapi-code.git --no-input \
+  project_name="Enterprise API" \
+  include_authentication=jwt \
+  include_cors=yes \
+  include_rate_limiting=yes \
+  include_logging=structured \
+  include_github_actions=yes
+```
+**Result**: Production-ready API with all enterprise features
+
+## 📁 Generated Structure
+
+```
+your-project/
+├── app/
+│   ├── main.py              # FastAPI application
+│   ├── core/config.py       # Configuration
+│   ├── api/v1/              # API routes
+│   ├── models/              # SQLAlchemy models
+│   ├── schemas/             # Pydantic schemas
+│   ├── crud/                # Database operations
+│   └── db/                  # Database session
+├── tests/                   # Test files (optional)
+├── alembic/                 # Database migrations
+├── management/              # Interactive shells
+├── docker-compose.yml       # Docker setup
+├── requirements.txt         # Dependencies
+├── .env                     # Environment variables
+└── README.md               # Project documentation
+```
+
+## 🚀 Development Workflows
+
+### Docker DB + Local App (Recommended)
+- Database runs in Docker (isolated, consistent)
+- FastAPI runs locally (easy debugging, hot reload)
+- Best of both worlds for development
+
+### Full Docker
+- Everything containerized
+- Production-like environment
+- Great for team consistency
+
+### Local Development
+- Everything runs on your machine
+- Full control over environment
+- Requires local PostgreSQL
+
+## 🧪 Testing Your Template
+
+```bash
+# Test the template generation
+python test_template.py
+
+# Generate and test a sample project
+cookiecutter . --no-input
+cd my_fastapi_project
+pip install -r requirements.txt
+pytest
+```
+
+## 🛠️ After Generation - Complete Setup Guide
+
+Once your project is generated, follow these steps:
+
+### Step 1: Navigate to Your Project
+```bash
+cd your-project-name  # Replace with your actual project name
+```
+
+### Step 2: Choose Your Development Setup
+
+#### 🐳 Option A: Docker DB + Local App (Recommended)
+Perfect for development - database in Docker, app runs locally for easy debugging.
+
+```bash
+# Create virtual environment
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
 
 # Install dependencies
 pip install -r requirements.txt
-```
 
-#### 2. Configure Database
-```bash
-# Copy environment file
-cp env.example .env
+# Start database only
+docker-compose up db -d
 
-# Edit .env with your database settings
-DATABASE_URL=postgresql://username:password@localhost:5432/your_database_name
-DEBUG=True
-PROJECT_NAME=My New Project
-VERSION=1.0.0
-```
-
-#### 3. Remove User Table (Optional)
-If you want a completely clean start, remove the user-related files:
-
-```bash
-# Remove user-related files
-rm app/models/user.py
-rm app/schemas/user.py
-rm app/crud/user.py
-rm app/api/v1/endpoints/users.py
-
-# Update imports in __init__.py files
-# (See detailed instructions below)
-```
-
-#### 4. Run Migrations
-```bash
-# Create initial migration (no User table)
+# Wait for database to be ready (check with: docker-compose ps)
+# Create database migrations
 alembic revision --autogenerate -m "Initial migration"
-
-# Apply migrations
 alembic upgrade head
-```
 
-#### 5. Start the Application
-```bash
-# Development server
-uvicorn app.main:app --reload
-
-# Visit http://localhost:8000/docs for API documentation
-```
-
-**You're ready!** Your API includes:
-- Clean FastAPI + SQLAlchemy setup
-- No pre-built models
-- Ready for your custom models
-- Interactive API documentation
-
-## 🧹 Detailed Cleanup Instructions (Option 2)
-
-If you chose the minimal setup and want to remove the User table completely, follow these detailed steps:
-
-### Step 1: Remove User Files
-```bash
-# Remove user-related files
-rm app/models/user.py
-rm app/schemas/user.py
-rm app/crud/user.py
-rm app/api/v1/endpoints/users.py
-```
-> 📋 **Copy these commands** - Click the code block above and press `Ctrl+C` (or `Cmd+C` on Mac)
-
-### Step 2: Update Import Files
-
-**Update `app/models/__init__.py`:**
-```python
-# Remove User import
-# from .user import User
-
-# Update __all__ list
-__all__ = []
-```
-
-**Update `app/schemas/__init__.py`:**
-```python
-# Remove User schema imports
-# from .user import UserBase, UserCreate, UserUpdate, UserResponse
-
-# Update __all__ list
-__all__ = []
-```
-
-**Update `app/crud/__init__.py`:**
-```python
-# Remove User CRUD imports
-# from .user import get_user, get_user_by_email, get_users, create_user, update_user, delete_user
-
-# Update __all__ list
-__all__ = []
-```
-
-**Update `app/api/v1/api.py`:**
-```python
-from fastapi import APIRouter
-# Remove users import
-# from app.api.v1.endpoints import users
-
-api_router = APIRouter()
-
-# Remove users router
-# api_router.include_router(users.router, prefix="/users", tags=["users"])
-```
-
-### Step 3: Clean Database (if already migrated)
-```bash
-# Drop all tables and recreate
-alembic downgrade base
-alembic upgrade head
-```
-> 📋 **Copy these commands** - Click the code block above and press `Ctrl+C` (or `Cmd+C` on Mac)
-
-### Step 4: Verify Clean Setup
-```bash
 # Start the application
 uvicorn app.main:app --reload
-
-# Visit http://localhost:8000/docs
-# You should only see the root and health endpoints
-```
-> 📋 **Copy these commands** - Click the code block above and press `Ctrl+C` (or `Cmd+C` on Mac)
-
-## 👥 What's Included with User Table (Option 1)
-
-If you choose to keep the User table, you get a complete user management system:
-
-### User Model Features
-- **ID**: Primary key with auto-increment
-- **Name**: User's full name (required)
-- **Email**: Unique email address with validation
-- **Active Status**: Boolean flag for user activation
-- **Timestamps**: Created and updated timestamps
-- **Type Safety**: Full SQLAlchemy 2.0 type annotations
-
-### API Endpoints
-- `GET /api/v1/users/` - List all users (with pagination)
-- `GET /api/v1/users/{user_id}` - Get specific user
-- `POST /api/v1/users/` - Create new user
-- `PUT /api/v1/users/{user_id}` - Update user
-- `DELETE /api/v1/users/{user_id}` - Delete user
-
-### Pydantic Schemas
-- **UserBase**: Common fields for all user operations
-- **UserCreate**: Schema for creating new users
-- **UserUpdate**: Schema for updating users (all fields optional)
-- **UserResponse**: Schema for API responses (includes all fields)
-
-### CRUD Operations
-- Complete database operations for all user actions
-- Email uniqueness validation
-- Proper error handling
-- Type-safe database queries
-
-### Ready for Extension
-The User model is designed to be easily extended with:
-- Authentication (JWT tokens, OAuth)
-- User roles and permissions
-- User profiles and preferences
-- Password hashing
-- Email verification
-
-## 🎯 What's Included with Minimal Setup (Option 2)
-
-If you choose the minimal setup, you get a clean foundation:
-
-### Core Infrastructure
-- **FastAPI Application**: Ready-to-run FastAPI app
-- **SQLAlchemy 2.0**: Latest ORM with type safety
-- **Database Connection**: PostgreSQL with connection pooling
-- **Alembic Migrations**: Database migration system
-- **Environment Configuration**: Pydantic-based settings
-- **Interactive Shells**: bpython, IPython, and standard Python
-
-### Project Structure
-- **Modular Architecture**: Clean separation of concerns
-- **Empty Directories**: Ready for your models, schemas, CRUD, and endpoints
-- **Type Hints**: Full type safety throughout
-- **Modern Python**: Uses latest Python features and best practices
-
-### Ready for Your Models
-The minimal setup gives you:
-- Clean database session management
-- Migration system ready for your models
-- API router ready for your endpoints
-- Shell tools for database exploration
-- No assumptions about your data model
-
-### Perfect For
-- **Microservices**: API-only services
-- **Custom Architectures**: When you have specific design requirements
-- **Learning**: Understanding FastAPI + SQLAlchemy from scratch
-- **Clean Slate**: Starting with your own models and business logic
-
-## 📝 Creating New Models
-
-### 1. Create the Model
-
-Create a new file in `app/models/` (e.g., `app/models/product.py`):
-
-```python
-from datetime import datetime
-from typing import Optional
-from sqlalchemy import String, Text, Integer, DateTime, func
-from sqlalchemy.orm import Mapped, mapped_column
-from app.db.session import Base
-
-class Product(Base):
-    """Product model example"""
-    __tablename__ = "products"
-
-    id: Mapped[int] = mapped_column(primary_key=True, index=True)
-    name: Mapped[str] = mapped_column(String(100))
-    description: Mapped[Optional[str]] = mapped_column(Text)
-    price: Mapped[float] = mapped_column()
-    is_active: Mapped[bool] = mapped_column(default=True)
-    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
-    updated_at: Mapped[Optional[datetime]] = mapped_column(DateTime(timezone=True), onupdate=func.now())
-
-    def __repr__(self):
-        return f"Product(id={self.id}, name={self.name}, price={self.price})"
 ```
 
-### 2. Create Pydantic Schemas
-
-Create `app/schemas/product.py`:
-
-```python
-from datetime import datetime
-from typing import Optional
-from pydantic import BaseModel
-
-class ProductBase(BaseModel):
-    """Base product schema"""
-    name: str
-    description: Optional[str] = None
-    price: float
-    is_active: bool = True
-
-class ProductCreate(ProductBase):
-    """Schema for creating a product"""
-    pass
-
-class ProductUpdate(BaseModel):
-    """Schema for updating a product"""
-    name: Optional[str] = None
-    description: Optional[str] = None
-    price: Optional[float] = None
-    is_active: Optional[bool] = None
-
-class ProductResponse(ProductBase):
-    """Schema for product response"""
-    id: int
-    created_at: datetime
-    updated_at: Optional[datetime] = None
-
-    class Config:
-        from_attributes = True
-```
-
-### 3. Create CRUD Operations
-
-Create `app/crud/product.py`:
-
-```python
-from sqlalchemy.orm import Session
-from sqlalchemy import select
-from typing import List, Optional
-from app.models.product import Product
-from app.schemas.product import ProductCreate, ProductUpdate
-
-def get_product(db: Session, product_id: int) -> Optional[Product]:
-    """Get product by ID"""
-    return db.scalar(select(Product).where(Product.id == product_id))
-
-def get_products(db: Session, skip: int = 0, limit: int = 100) -> List[Product]:
-    """Get all products with pagination"""
-    return db.scalars(select(Product).offset(skip).limit(limit)).all()
-
-def create_product(db: Session, product: ProductCreate) -> Product:
-    """Create new product"""
-    db_product = Product(**product.model_dump())
-    db.add(db_product)
-    db.commit()
-    db.refresh(db_product)
-    return db_product
-
-def update_product(db: Session, product_id: int, product_update: ProductUpdate) -> Optional[Product]:
-    """Update product"""
-    db_product = get_product(db, product_id)
-    if not db_product:
-        return None
-    
-    update_data = product_update.model_dump(exclude_unset=True)
-    for field, value in update_data.items():
-        setattr(db_product, field, value)
-    
-    db.commit()
-    db.refresh(db_product)
-    return db_product
-
-def delete_product(db: Session, product_id: int) -> bool:
-    """Delete product"""
-    db_product = get_product(db, product_id)
-    if not db_product:
-        return False
-    
-    db.delete(db_product)
-    db.commit()
-    return True
-```
-
-### 4. Create API Endpoints
-
-Create `app/api/v1/endpoints/products.py`:
-
-```python
-from fastapi import APIRouter, Depends, HTTPException, status
-from sqlalchemy.orm import Session
-from typing import List
-from app.db.session import get_db
-from app.schemas.product import ProductCreate, ProductUpdate, ProductResponse
-from app.crud import product as product_crud
-
-router = APIRouter()
-
-@router.get("/", response_model=List[ProductResponse])
-def get_products(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    """Get all products with pagination"""
-    return product_crud.get_products(db, skip=skip, limit=limit)
-
-@router.get("/{product_id}", response_model=ProductResponse)
-def get_product(product_id: int, db: Session = Depends(get_db)):
-    """Get product by ID"""
-    product = product_crud.get_product(db, product_id)
-    if not product:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail="Product not found"
-        )
-    return product
-
-@router.post("/", response_model=ProductResponse, status_code=status.HTTP_201_CREATED)
-def create_product(product: ProductCreate, db: Session = Depends(get_db)):
-    """Create new product"""
-    return product_crud.create_product(db, product)
-
-@router.put("/{product_id}", response_model=ProductResponse)
-def update_product(product_id: int, product_update: ProductUpdate, db: Session = Depends(get_db)):
-    """Update product"""
-    product = product_crud.update_product(db, product_id, product_update)
-    if not product:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail="Product not found"
-        )
-    return product
-
-@router.delete("/{product_id}", status_code=status.HTTP_204_NO_CONTENT)
-def delete_product(product_id: int, db: Session = Depends(get_db)):
-    """Delete product"""
-    if not product_crud.delete_product(db, product_id):
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail="Product not found"
-        )
-```
-
-### 5. Update Imports and Router
-
-Update `app/models/__init__.py`:
-```python
-from .user import User
-from .product import Product
-
-__all__ = ["User", "Product"]
-```
-
-Update `app/schemas/__init__.py`:
-```python
-from .user import UserBase, UserCreate, UserUpdate, UserResponse
-from .product import ProductBase, ProductCreate, ProductUpdate, ProductResponse
-
-__all__ = ["UserBase", "UserCreate", "UserUpdate", "UserResponse", 
-           "ProductBase", "ProductCreate", "ProductUpdate", "ProductResponse"]
-```
-
-Update `app/crud/__init__.py`:
-```python
-from .user import get_user, get_user_by_email, get_users, create_user, update_user, delete_user
-from .product import get_product, get_products, create_product, update_product, delete_product
-
-__all__ = ["get_user", "get_user_by_email", "get_users", "create_user", "update_user", "delete_user",
-           "get_product", "get_products", "create_product", "update_product", "delete_product"]
-```
-
-Update `app/api/v1/api.py`:
-```python
-from fastapi import APIRouter
-from app.api.v1.endpoints import users, products
-
-api_router = APIRouter()
-
-api_router.include_router(users.router, prefix="/users", tags=["users"])
-api_router.include_router(products.router, prefix="/products", tags=["products"])
-```
-
-### 6. Create and Run Migration
+#### 🐳 Option B: Full Docker Setup
+Everything runs in containers - good for production-like environment.
 
 ```bash
-# Create migration for new model
-alembic revision --autogenerate -m "Add Product model"
+# Start everything with Docker
+docker-compose up
 
-# Apply migration
-alembic upgrade head
+# Or run in background
+docker-compose up -d
 ```
 
-## 🐚 Interactive Shells
-
-The boilerplate includes three interactive shells for database exploration:
-
-### bpython (Recommended)
-```bash
-python management/shell_launcher.py bpython
-```
-> 📋 **Copy this command** - Click the code block above and press `Ctrl+C` (or `Cmd+C` on Mac)
-
-- Best autocompletion
-- Syntax highlighting
-- Auto-suggestions
-
-### IPython
-```bash
-python management/shell_launcher.py ipython
-```
-> 📋 **Copy this command** - Click the code block above and press `Ctrl+C` (or `Cmd+C` on Mac)
-
-- Good balance of features
-- Magic commands
-- Rich display
-
-### Standard Python
-```bash
-python management/shell_launcher.py standard
-```
-> 📋 **Copy this command** - Click the code block above and press `Ctrl+C` (or `Cmd+C` on Mac)
-
-- Basic Python shell
-- No additional dependencies
-
-### Shell Features
-
-All shells come pre-loaded with:
-- Database session: `db`
-- All models: `User`, `Product`, etc.
-- All CRUD functions: `get_user`, `create_user`, etc.
-- SQLAlchemy functions: `select`, `func`, `desc`
-- Modern SQLAlchemy 2.0 syntax
-
-### Example Shell Usage
-
-```python
-# Get all users
-users = db.scalars(select(User)).all()
-
-# Get active users
-active_users = db.scalars(select(User).where(User.is_active == True)).all()
-
-# Create new user
-new_user = create_user(db, UserCreate(name="John", email="john@example.com"))
-
-# Get user by ID
-user = get_user(db, user_id=1)
-
-# Count users
-user_count = db.scalar(select(func.count(User.id)))
-
-# Order by creation date
-users = db.scalars(select(User).order_by(User.created_at.desc())).all()
-```
-
-## 🗄️ Database Migrations
-
-### Creating Migrations
+#### 💻 Option C: Local Development
+Everything runs locally - requires PostgreSQL installation.
 
 ```bash
-# Auto-generate migration from model changes
-alembic revision --autogenerate -m "Description of changes"
+# Install and start PostgreSQL locally
+# Create database: createdb your_database_name
 
-# Create empty migration for custom changes
-alembic revision -m "Custom migration"
-```
-> 📋 **Copy these commands** - Click the code block above and press `Ctrl+C` (or `Cmd+C` on Mac)
+# Create virtual environment
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
 
-### Applying Migrations
+# Install dependencies
+pip install -r requirements.txt
 
-```bash
-# Apply all pending migrations
+# Configure environment (edit .env file with your database settings)
+# Create migrations
+alembic revision --autogenerate -m "Initial migration"
 alembic upgrade head
 
-# Apply specific migration
-alembic upgrade <revision_id>
+# Start the application
+uvicorn app.main:app --reload
+```
 
-# Rollback to previous migration
+### Step 3: Access Your API
+- **📚 API Documentation**: http://localhost:8000/docs
+- **📖 Alternative Docs**: http://localhost:8000/redoc  
+- **❤️ Health Check**: http://localhost:8000/health
+- **🏠 Root Endpoint**: http://localhost:8000/
+
+### Step 4: Verify Everything Works
+```bash
+# Test the API
+curl http://localhost:8000/health
+
+# Run tests (if included)
+pytest
+
+# Check database connection
+python -c "from app.db.session import engine; print('✅ Database connected!')"
+```
+
+## 🔧 Common Commands & Troubleshooting
+
+### Database Operations
+```bash
+# Create new migration
+alembic revision --autogenerate -m "Add new model"
+
+# Apply migrations
+alembic upgrade head
+
+# Rollback migration
 alembic downgrade -1
 
-# Rollback to specific migration
-alembic downgrade <revision_id>
-```
-> 📋 **Copy these commands** - Click the code block above and press `Ctrl+C` (or `Cmd+C` on Mac)
-
-### Migration History
-
-```bash
-# Show migration history
-alembic history
-
-# Show current migration
+# Check migration status
 alembic current
-
-# Show pending migrations
-alembic show head
-```
-> 📋 **Copy these commands** - Click the code block above and press `Ctrl+C` (or `Cmd+C` on Mac)
-
-## 🔧 Configuration
-
-### Environment Variables
-
-Create a `.env` file with:
-
-```env
-# Database
-DATABASE_URL=postgresql://username:password@localhost:5432/your_database_name
-
-# Application
-DEBUG=True
-PROJECT_NAME=Your FastAPI Project
-VERSION=1.0.0
 ```
 
-### Settings
+### Testing
+```bash
+# Run all tests
+pytest
 
-All settings are managed in `app/core/config.py` using `pydantic-settings`:
+# Run with coverage
+pytest --cov=app
 
-```python
-class Settings(BaseSettings):
-    database_url: str = "postgresql://username:password@localhost:5432/your_database_name"
-    debug: bool = True
-    project_name: str = "Your FastAPI Project"
-    version: str = "1.0.0"
-    
-    class Config:
-        env_file = ".env"
-        case_sensitive = False
+# Run specific test file
+pytest tests/test_users.py -v
 ```
 
-## 🚀 API Endpoints
+### Docker Operations
+```bash
+# Start database only
+docker-compose up db -d
 
-The boilerplate includes a complete User API:
+# Start all services
+docker-compose up
 
-- `GET /api/v1/users/` - List all users
-- `GET /api/v1/users/{user_id}` - Get user by ID
-- `POST /api/v1/users/` - Create new user
-- `PUT /api/v1/users/{user_id}` - Update user
-- `DELETE /api/v1/users/{user_id}` - Delete user
+# View logs
+docker-compose logs app
+docker-compose logs db
 
-Visit `http://localhost:8000/docs` for interactive API documentation.
-
-## 🧪 SQLAlchemy 2.0 Features
-
-This boilerplate uses the latest SQLAlchemy 2.0 features:
-
-### Type Annotations
-```python
-id: Mapped[int] = mapped_column(primary_key=True)
-name: Mapped[str] = mapped_column(String(100))
-email: Mapped[Optional[str]] = mapped_column(String(255))
+# Stop services
+docker-compose down
 ```
 
-### Modern Query Syntax
-```python
-# Get single record
-user = db.scalar(select(User).where(User.id == 1))
+### Common Issues & Solutions
 
-# Get multiple records
-users = db.scalars(select(User)).all()
-
-# With relationships
-user_with_posts = db.scalar(
-    select(User).options(selectinload(User.posts))
-)
+#### "ModuleNotFoundError" when running the app
+```bash
+# Make sure you're in the virtual environment
+source venv/bin/activate  # or venv\Scripts\activate on Windows
+pip install -r requirements.txt
 ```
 
-### Relationships
-```python
-# One-to-many
-posts: Mapped[List["Post"]] = relationship("Post", back_populates="user")
+#### Database connection errors
+```bash
+# Check if database is running
+docker-compose ps
 
-# Many-to-one
-user: Mapped["User"] = relationship("User", back_populates="posts")
+# Check database logs
+docker-compose logs db
+
+# Restart database
+docker-compose restart db
 ```
 
-## 📚 Learning Resources
+#### Port already in use
+```bash
+# Find what's using the port
+lsof -i :8000
 
-- [FastAPI Documentation](https://fastapi.tiangolo.com/)
-- [SQLAlchemy 2.0 Documentation](https://docs.sqlalchemy.org/en/20/)
-- [Alembic Documentation](https://alembic.sqlalchemy.org/)
-- [Pydantic Documentation](https://docs.pydantic.dev/)
+# Or change the port in your .env file
+API_PORT=8001
+```
+
+#### Alembic migration issues
+```bash
+# Reset migrations (careful - this deletes data!)
+rm alembic/versions/*.py
+alembic revision --autogenerate -m "Initial migration"
+alembic upgrade head
+```
 
 ## 🤝 Contributing
 
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests if applicable
-5. Submit a pull request
+1. Fork this repository
+2. Make your changes
+3. Test with: `cookiecutter . --no-input`
+4. Submit a pull request
 
 ## 📄 License
 
-This project is licensed under the MIT License.
-
-## 🎉 Ready to Start?
-
-### For User-Based Applications:
-1. Run interactive generator: `git clone https://github.com/sohanur-cefalo/boilerplate-fastapi-code.git temp-boilerplate && cd temp-boilerplate && python start_project.py && cd .. && rm -rf temp-boilerplate || (cd .. && rm -rf temp-boilerplate && exit 1)`
-2. Follow the interactive prompts
-3. Start building your user management features!
-
-### For Custom Applications:
-1. Run interactive generator: `git clone https://github.com/sohanur-cefalo/boilerplate-fastapi-code.git temp-boilerplate && cd temp-boilerplate && python start_project.py && cd .. && rm -rf temp-boilerplate || (cd .. && rm -rf temp-boilerplate && exit 1)`
-2. Follow the interactive prompts
-3. Start building your custom models!
-
-### What You Get Either Way:
-- ✅ Production-ready FastAPI + SQLAlchemy 2.0 setup
-- ✅ PostgreSQL database with migrations
-- ✅ Type-safe code throughout
-- ✅ Interactive development shells
-- ✅ Clean, modular architecture
-- ✅ Comprehensive documentation
-- ✅ Ready for deployment
+This template is licensed under the MIT License. Generated projects can use any license you choose.
 
 ---
 
-**Happy coding! 🚀**
+**🎉 Ready to build amazing FastAPI applications? Get started now!**
+
+```bash
+pip install cookiecutter
+cookiecutter https://github.com/sohanur-cefalo/boilerplate-fastapi-code.git
+```
+
+**⭐ Star this repo if it helps you build better APIs faster!**
