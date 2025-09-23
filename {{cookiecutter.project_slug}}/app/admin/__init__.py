@@ -24,10 +24,11 @@ def discover_models() -> List[Type]:
     return models
 
 
-def setup_admin(app: FastAPI) -> Admin:
+def setup_admin(fastapi_app: FastAPI) -> Admin:
     """Initialize SQLAdmin, register views for discovered models, and attach custom hooks."""
     _import_all_models()
-    admin = Admin(app, engine, title=f"{app.title} Admin")
+    admin_title = f"{getattr(fastapi_app, 'title', 'Application')} Admin"
+    admin = Admin(fastapi_app, engine, title=admin_title)
 
     # Auto-register all models, skipping any that cannot be introspected yet
     for model in discover_models():
@@ -46,6 +47,6 @@ def setup_admin(app: FastAPI) -> Admin:
     register_custom_model_views(admin)
 
     # Attach optional custom admin routes (dashboards, charts)
-    register_custom_routes(app)
+    register_custom_routes(fastapi_app)
 
     return admin
