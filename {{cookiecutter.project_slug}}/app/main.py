@@ -27,8 +27,7 @@ app = FastAPI(
 # Defer SQLAdmin setup to startup to ensure all models are imported
 @app.on_event("startup")
 def _init_admin():
-    # Force import of models module so Base mappers are populated
-    import app.models  # noqa: F401
+    # setup_admin handles safe model import without shadowing
     setup_admin(app)
 
 {% if cookiecutter.include_rate_limiting == "yes" -%}
