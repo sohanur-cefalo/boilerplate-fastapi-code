@@ -53,3 +53,4 @@ htmlcov/
 .env.development
 .env.test
 {% endif -%}
+

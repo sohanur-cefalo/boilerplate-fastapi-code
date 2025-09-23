@@ -185,3 +185,4 @@ python test_template.py
 Your FastAPI boilerplate is now a **professional, flexible, and maintainable** Cookiecutter template that can generate customized projects based on specific needs. This is a significant upgrade that will save time and ensure consistency across all your FastAPI projects.
 
 **Happy templating! 🚀**
+

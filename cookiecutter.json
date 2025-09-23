@@ -7,7 +7,7 @@
     "version": "0.1.0",
     "python_version": "3.11",
     "include_user_model": ["yes", "no"],
-    "development_environment": ["docker_db_local_app", "full_docker", "local_development"],
+    "development_environment": ["local_development", "docker_db_local_app", "full_docker"],
     "database_name": "{{ cookiecutter.project_slug }}",
     "database_user": "postgres",
     "database_password": "postgres",
@@ -24,3 +24,4 @@
     "include_github_actions": ["yes", "no"],
     "license": ["MIT", "Apache-2.0", "GPL-3.0", "BSD-3-Clause", "None"]
 }
+

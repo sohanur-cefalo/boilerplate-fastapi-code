@@ -35,13 +35,14 @@ cookiecutter https://github.com/sohanur-cefalo/boilerplate-fastapi-code.git --no
 cd your-project-name
 python -m venv venv && source venv/bin/activate
 pip install -r requirements.txt
-docker-compose up db -d
-alembic upgrade head
+# SQLite by default (no Docker needed)
+alembic upgrade head || alembic revision --autogenerate -m "Initial" && alembic upgrade head
 uvicorn app.main:app --reload
 ```
 
 ### 4. Access Your API
 - **📚 API Docs**: http://localhost:8000/docs
+- **🛠️ Admin Panel**: http://localhost:8000/admin
 - **❤️ Health Check**: http://localhost:8000/health
 
 ## ⚡ What You Get
@@ -56,10 +57,12 @@ uvicorn app.main:app --reload
 ### 🔧 **Modern Tech Stack**
 - **FastAPI** - High-performance async web framework
 - **SQLAlchemy 2.0** - Modern ORM with type annotations
-- **PostgreSQL** - Production-ready database
+- **SQLite by default** - Simple local development, auto-created `app.db`
+- **PostgreSQL option** - Swap by setting `DATABASE_URL` or using Docker
 - **Alembic** - Database migrations
 - **Pydantic** - Data validation and settings
 - **Docker** - Containerization support
+- **SQLAdmin** - Auto admin panel for all models at `/admin`
 
 ### 🎯 **Production Ready**
 - Type-safe code throughout

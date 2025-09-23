@@ -116,3 +116,4 @@ Your FastAPI Cookiecutter template is **APPROVED FOR COMMUNITY RELEASE**.
 ---
 
 **🚀 Ready to make a positive impact on the developer community!**
+

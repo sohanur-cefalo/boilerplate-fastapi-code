@@ -9,6 +9,7 @@ from slowapi.errors import RateLimitExceeded
 {% endif -%}
 from app.core.config import settings
 from app.api.v1.api import api_router
+from app.admin import setup_admin
 
 {% if cookiecutter.include_rate_limiting == "yes" -%}
 # Initialize rate limiter
@@ -22,6 +23,13 @@ app = FastAPI(
     version=settings.version,
     debug=settings.debug,
 )
+
+# Defer SQLAdmin setup to startup to ensure all models are imported
+@app.on_event("startup")
+def _init_admin():
+    # Force import of models module so Base mappers are populated
+    import app.models  # noqa: F401
+    setup_admin(app)
 
 {% if cookiecutter.include_rate_limiting == "yes" -%}
 # Add rate limiting
@@ -53,7 +61,8 @@ def read_root({% if cookiecutter.include_rate_limiting == "yes" %}request: Reque
     return {
         "message": f"Welcome to {settings.project_name}",
         "version": settings.version,
-        "docs": "/docs"
+        "docs": "/docs",
+        "admin": "/admin"
     }
 
 

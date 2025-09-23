@@ -166,3 +166,4 @@ def test_login_invalid_credentials(client: TestClient):
     assert response.status_code == 401
 {% endif -%}
 {% endif -%}
+

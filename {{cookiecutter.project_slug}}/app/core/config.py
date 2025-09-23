@@ -1,12 +1,16 @@
 from pydantic_settings import BaseSettings
 from typing import Optional
+import os
 
 
 class Settings(BaseSettings):
     """Application settings using pydantic-settings"""
     
     # Database
-    database_url: str = "postgresql://{{cookiecutter.database_user}}:{{cookiecutter.database_password}}@{{cookiecutter.database_host}}:{{cookiecutter.database_port}}/{{cookiecutter.database_name}}"
+    database_url: str = os.getenv(
+        "DATABASE_URL",
+        "sqlite:///./app.db"
+    )
     
     # Application
     debug: bool = {% if cookiecutter.development_environment != "full_docker" %}True{% else %}False{% endif %}

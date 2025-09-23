@@ -141,3 +141,4 @@ Your FastAPI Cookiecutter template now has:
 4. **Iterate**: Keep improving based on user feedback
 
 **Your template is now ready for widespread use! 🚀**
+

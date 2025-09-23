@@ -30,3 +30,4 @@ def test_docs_redirect(client: TestClient):
     response = client.get("/docs")
     assert response.status_code == 200
 {% endif -%}
+
